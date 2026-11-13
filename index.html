@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="nl"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Tekenraad</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;800;900&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:"Nunito","Segoe UI",system-ui,sans-serif;color:#1d2340;min-height:100vh;
+background:url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220' fill='none' stroke='white' stroke-width='4' stroke-linecap='round' stroke-linejoin='round' opacity='.13'%3E%3Ccircle cx='40' cy='40' r='14'/%3E%3Cpath d='M120 30l8 18 20 2-15 13 5 19-18-10-17 10 5-19-15-13 20-2z'/%3E%3Cpath d='M150 140q10-20 20 0t20 0t20 0'/%3E%3Cpath d='M30 150l22-34 22 34z'/%3E%3Crect x='95' y='110' width='28' height='28' rx='6'/%3E%3Cpath d='M60 200q10-12 20 0'/%3E%3C/svg%3E"),linear-gradient(135deg,#2a62d6,#6a2fd0);background-attachment:fixed}
+.screen{display:none;padding:14px;max-width:1180px;margin:auto}.screen.on{display:block}
+.card{background:#fff;border-radius:16px;padding:14px;box-shadow:0 6px 0 rgba(0,0,0,.16),0 12px 26px rgba(0,0,0,.2)}
+h1,h2,h3{margin:0 0 8px}
+input,select,textarea,button{font:inherit;padding:9px 12px;border-radius:10px;border:2px solid #cdd3e6}
+input,select,textarea{width:100%;margin:4px 0 10px;background:#fff;font-weight:600}
+input:focus,select:focus,textarea:focus{outline:none;border-color:#3b82f6}
+button{background:#2f6fe0;border-color:#2f6fe0;color:#fff;cursor:pointer;font-weight:700}
+button:disabled{opacity:.5;cursor:not-allowed}
+.btn{display:block;width:100%;border:0;border-radius:12px;padding:11px 18px;font-weight:900;font-size:18px;color:#fff;background:#3b82f6;box-shadow:0 5px 0 #1f56b8;transition:transform .08s,box-shadow .08s}
+.btn:hover{filter:brightness(1.07)}
+.btn:active:not(:disabled){transform:translateY(4px);box-shadow:0 1px 0 #1f56b8}
+.btn.go{background:#3fcf3f;box-shadow:0 5px 0 #23902a}.btn.go:active:not(:disabled){box-shadow:0 1px 0 #23902a}
+.btn.org{background:#ff9f1c;box-shadow:0 5px 0 #c26f00}.btn.org:active:not(:disabled){box-shadow:0 1px 0 #c26f00}
+.btn.sec{background:#fff;color:#2f6fe0;box-shadow:0 5px 0 #c6cee6;width:auto;font-size:15px;padding:8px 14px}
+.btn.auto{width:auto;display:inline-block}
+.logo{text-align:center;font-weight:900;line-height:1.1;user-select:none}
+.logo span{display:inline-block;-webkit-text-stroke:6px #14204f;paint-order:stroke fill;text-shadow:0 5px 0 rgba(0,0,0,.3)}
+.logo.big{font-size:68px;margin:2vh 0 4px}.logo.sm{font-size:38px;margin:0 0 4px}
+.logo.sm span{-webkit-text-stroke:4px #14204f}
+.tag{text-align:center;color:#fff;font-weight:800;margin:0 0 14px;text-shadow:0 2px 0 rgba(0,0,0,.25)}
+.homecard{max-width:860px;margin:0 auto}
+.homegrid{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+.or{text-align:center;color:#8a93b5;font-weight:800;margin:12px 0}
+.err{color:#c0262d;min-height:20px;margin:8px 0 0;font-weight:700}
+label{font-size:13px;font-weight:800;color:#555a7a}
+.lobbygrid{display:grid;grid-template-columns:1fr 1.3fr;gap:14px;margin-top:6px}
+.codebox{display:flex;align-items:center;gap:10px;background:#eef2ff;border-radius:12px;padding:10px;margin-bottom:12px}
+.codebox>div{flex:1}
+.codebox b{font-size:36px;letter-spacing:6px;color:#2f6fe0}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:0 12px}
+ul{list-style:none;margin:0;padding:0}
+.pl{display:flex;align-items:center;gap:8px;padding:6px 8px;border-radius:8px}
+.pl:nth-child(even){background:#f1f4fb}
+.pl.g,.pl.g:nth-child(even){background:#b9f5b1}
+.rk{font-weight:900;color:#8a93b5;width:26px;flex:none}
+.av{width:42px;height:42px;border-radius:50%;color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;flex:none;object-fit:cover}
+img.av{background:#eef2ff;border:2px solid #dfe5f5}
+.nmw{flex:1;min-width:0}
+.nm{font-weight:800;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.nmw small{color:#6b7391;font-weight:700;display:block}
+.tg{font-size:18px;flex:none}
+.kb{padding:2px 6px;font-size:11px;background:#fff;color:#c0262d;border-color:#c0262d;flex:none}.kb.on{background:#c0262d;color:#fff}
+.khint{display:block;color:#7a82a0;margin-top:8px;font-size:11px}
+.top{display:flex;align-items:center;gap:14px;margin:6px 0 12px;padding:8px 14px}
+#timer{width:52px;height:52px;flex:none;border-radius:50%;border:5px solid #3b82f6;background:#fff;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:20px;color:#1f56b8}
+#timer:empty{display:none}
+#rinfo{font-weight:900;color:#555a7a;min-width:110px}
+#word{font:800 30px/1.1 ui-monospace,Consolas,monospace;white-space:pre;text-align:center;flex:1;letter-spacing:2px}
+.gamegrid{display:grid;grid-template-columns:240px 1fr 260px;gap:12px;align-items:start}
+.cwrap{position:relative}
+canvas{width:100%;display:block;background:#fff;border-radius:14px;touch-action:none;cursor:crosshair;box-shadow:0 6px 0 rgba(0,0,0,.16),0 12px 26px rgba(0,0,0,.2)}
+#overlay{position:absolute;inset:0;background:rgba(15,20,60,.84);color:#fff;border-radius:14px;display:none;flex-direction:column;align-items:center;justify-content:center;gap:10px;text-align:center;padding:16px}
+#overlay.strip{inset:0 0 auto 0;background:rgba(15,20,60,.9);padding:8px 12px;gap:4px;border-radius:14px 14px 0 0}
+#overlay.strip h2{margin:0}
+#overlay .btn{width:auto;min-width:200px;font-size:22px;margin:4px}
+#overlay li{padding:3px 0}
+#tools{display:none;margin-top:10px;padding:10px;gap:14px;flex-wrap:wrap;align-items:center;justify-content:center}
+#cur{width:46px;height:46px;border-radius:10px;border:3px solid #1d2340;flex:none}
+.pal{display:grid;grid-template-columns:repeat(10,28px);gap:3px}
+.szs,.tbs{display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+#votebar{display:none;margin-top:10px;text-align:center;font-weight:800}
+#votebar button{font-size:20px;margin:0 6px}
+.sw{width:28px;height:28px;border-radius:5px;border:1px solid rgba(0,0,0,.3);cursor:pointer;padding:0}
+.sw.on{box-shadow:0 0 0 2px #fff,0 0 0 4px #1d2340}
+.sz{width:36px;height:36px;display:flex;align-items:center;justify-content:center;background:#fff;border:2px solid #ccd3e6;border-radius:10px;cursor:pointer;padding:0}.sz.on{border-color:#2f6fe0;background:#eef2ff}
+.sz i{background:#1d2340;border-radius:50%;display:block}
+.tb{background:#fff;color:#1d2340;border-color:#ccd3e6;padding:6px 10px}.tb.on{border-color:#2f6fe0;background:#eef2ff}
+.chat{display:flex;flex-direction:column;height:560px}
+#log{flex:1;overflow-y:auto;font-size:14px;margin-bottom:8px}
+#log div{padding:4px 8px;border-radius:6px;word-wrap:break-word}#log div:nth-child(even){background:#f1f4fb}
+.ok{color:#168a2e;font-weight:700}.warn{color:#c47b00;font-weight:700}.info{color:#2f6fe0;font-weight:700}
+#log div.ok{background:#dcf7d8}
+#avc{width:176px;height:176px;margin:4px auto 6px;border:3px dashed #b9c2dd;background:#f6f8fb;box-shadow:none;border-radius:16px}
+.opt{display:flex;flex-wrap:wrap;gap:6px;margin:4px 0 10px}
+.egrid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:12px 0}
+.egrid h3{margin:0 0 6px}.egrid div div{margin-top:6px;font-weight:800}
+#eranking li{font-size:20px;font-weight:800;padding:5px 8px;border-radius:8px}
+#eranking li:nth-child(even){background:#f1f4fb}
+@media(max-width:850px){.lobbygrid,.gamegrid,.egrid,.homegrid{grid-template-columns:1fr}.chat{height:260px}#word{font-size:20px}.logo.big{font-size:46px}}
+</style></head><body>
+
+<section id="home" class="screen on">
+  <div class="logo big"></div>
+  <p class="tag">Teken, raad en win met uw vrienden. Maak een kamer en deel de code.</p>
+  <div class="card homecard"><div class="homegrid">
+    <div>
+      <label>Bijnaam (gebruik geen echte naam)</label>
+      <input id="name" maxlength="16" placeholder="Bijvoorbeeld: SnelleKikker">
+      <label>Kamercode</label>
+      <input id="code" maxlength="4" placeholder="ABCD" style="text-transform:uppercase;letter-spacing:4px;font-size:20px">
+      <button id="join" class="btn go">Meedoen</button>
+      <div class="or">of</div>
+      <button id="create" class="btn org">Nieuwe kamer maken</button>
+      <button id="test" class="btn" style="margin-top:12px">🧪 Testmodus (alleen, met bots)</button>
+      <p id="err" class="err"></p>
+    </div>
+    <div>
+      <h3 style="text-align:center">Uw poppetje</h3>
+      <canvas id="avc" width="128" height="128"></canvas>
+      <div class="opt" style="justify-content:center"><button class="tb" id="avclear" type="button">Wis tekening</button><button class="tb" id="avrand" type="button">🎲 Willekeurig</button></div>
+      <label>Kleur</label><div class="opt" id="o_body"></div>
+      <label>Ogen</label><div class="opt" id="o_eyes"></div>
+      <label>Mond</label><div class="opt" id="o_mouth"></div>
+      <label>Hoed</label><div class="opt" id="o_hat"></div>
+      <label>Zelf tekenen op uw poppetje</label><div class="opt" id="o_pen"></div>
+    </div>
+  </div></div>
+</section>
+
+<section id="lobby" class="screen">
+  <div class="logo sm"></div>
+  <div class="lobbygrid">
+  <div class="card"><h2>Spelers <small id="pc"></small></h2><ul id="lplayers"></ul><small class="khint"></small></div>
+  <div class="card">
+    <div class="codebox"><div><small>Kamercode</small><br><b id="lcode"></b></div><button id="copy" class="btn sec">Kopieer</button></div>
+    <div class="row2">
+      <div><label>Rondes</label><select id="s_rounds"></select></div>
+      <div><label>Tekentijd (seconden)</label><select id="s_time"></select></div>
+      <div><label>Woorden om uit te kiezen</label><select id="s_choices"></select></div>
+      <div><label>Hints (onthulde letters)</label><select id="s_hints"></select></div>
+      <div><label>Maximaal aantal spelers</label><select id="s_max"></select></div>
+    </div>
+    <label>Eigen woorden (gescheiden door komma's)</label>
+    <textarea id="s_custom" rows="3" placeholder="bijvoorbeeld: stofzuiger, schoolreisje, gymzaal"></textarea>
+    <label><input type="checkbox" id="s_only" style="width:auto;margin:0 6px 0 0">Alleen eigen woorden gebruiken (minstens het aantal keuzes)</label>
+    <p id="lmsg" class="info"></p>
+    <button id="start" class="btn go">Spel starten</button>
+  </div>
+</div></section>
+
+<section id="game" class="screen">
+  <div class="card top"><span id="timer"></span><span id="rinfo"></span><span id="word"></span></div>
+  <div class="gamegrid">
+    <div class="card"><ul id="gplayers"></ul><small class="khint"></small></div>
+    <div>
+      <div class="cwrap"><canvas id="cv" width="800" height="600"></canvas><div id="overlay"></div></div>
+      <div class="card" id="votebar"><span>Beoordeel de tekening: </span><button id="up" class="tb" type="button">👍</button><button id="down" class="tb" type="button">👎</button></div>
+      <div class="card" id="tools"></div>
+    </div>
+    <div class="card chat"><div id="log"></div><input id="msg" maxlength="100" placeholder="Typ uw gok en druk op Enter" autocomplete="off"></div>
+  </div>
+</section>
+
+<section id="end" class="screen"><div class="card">
+  <h2>🏆 Einde van het spel</h2>
+  <ul id="eranking"></ul>
+  <div id="egallery" class="egrid"></div>
+  <p id="eline" class="info"></p>
+  <p>Terug naar de lobby over <b id="etimer"></b> seconden.</p>
+  <button id="tolobby" class="btn go auto" style="display:none">Nu terug naar de lobby</button>
+</div></section>
+
+<script>
+const $=id=>document.getElementById(id);
+let ws=null,me=null,R=null,RES=null,choices=null,drawing=false,color='#000000',size=10,tool='pen',last=null,cnt=0,sid=0;
+const AVT={}; // avatars van alle spelers (id -> afbeelding)
+const cv=$('cv'),ctx=cv.getContext('2d');
+ctx.fillStyle='#fff';ctx.fillRect(0,0,800,600);
+
+/* ---------- logo ---------- */
+const LC=['#ff4d4d','#ff9f1c','#ffd400','#3fcf3f','#22c1c3','#3b82f6','#9b5de5','#ff6fb5','#ff4d4d'],LR=[-6,4,-3,6,-5,3,-4,5,-2];
+document.querySelectorAll('.logo').forEach(l=>[...'Tekenraad'].forEach((ch,i)=>{
+  const s=document.createElement('span');s.textContent=ch;s.style.color=LC[i%LC.length];
+  s.style.transform=`rotate(${LR[i%LR.length]}deg) translateY(${i%2?4:-2}px)`;l.append(s);}));
+
+/* ---------- poppetje maken ---------- */
+const AVS=128,avc=$('avc'),actx=avc.getContext('2d');
+const layer=document.createElement('canvas');layer.width=layer.height=AVS;const lctx=layer.getContext('2d');
+let av={body:'#ffd400',eyes:0,mouth:0,hat:0};
+try{const s=JSON.parse(localStorage.getItem('tr_av'));if(s&&typeof s.body==='string')av={...av,...s};}catch{}
+const avPen={color:'#000000',size:4,erase:false};
+function paintAv(){
+  const c=actx;c.clearRect(0,0,AVS,AVS);
+  c.lineWidth=3;c.strokeStyle='#222';c.lineCap=c.lineJoin='round';
+  c.fillStyle=av.body;c.beginPath();c.arc(64,76,40,0,Math.PI*2);c.fill();c.stroke();
+  const ex=[50,78],ey=70;c.fillStyle='#222';
+  if(av.eyes===0)ex.forEach(x=>{c.beginPath();c.arc(x,ey,4,0,7);c.fill();});
+  else if(av.eyes===1)ex.forEach(x=>{c.fillStyle='#fff';c.beginPath();c.arc(x,ey,9,0,7);c.fill();c.stroke();
+    c.fillStyle='#222';c.beginPath();c.arc(x+1,ey+1,4,0,7);c.fill();});
+  else if(av.eyes===2)ex.forEach(x=>{c.beginPath();c.arc(x,ey+4,7,Math.PI*1.1,Math.PI*1.9);c.stroke();});
+  else{c.fillRect(38,ey-8,24,14);c.fillRect(66,ey-8,24,14);c.fillRect(60,ey-5,8,3);}
+  c.fillStyle='#222';
+  if(av.mouth===0){c.beginPath();c.arc(64,82,14,.15*Math.PI,.85*Math.PI);c.stroke();}
+  else if(av.mouth===1){c.fillStyle='#8b1e2d';c.beginPath();c.arc(64,84,14,0,Math.PI);c.closePath();c.fill();c.stroke();}
+  else if(av.mouth===2){c.beginPath();c.moveTo(52,92);c.lineTo(76,92);c.stroke();}
+  else{c.beginPath();c.arc(64,102,13,1.15*Math.PI,1.85*Math.PI);c.stroke();}
+  if(av.hat===1){c.fillStyle='#e63946';c.beginPath();c.arc(64,44,30,Math.PI,0);c.closePath();c.fill();c.stroke();
+    c.fillRect(64,40,38,6);c.strokeRect(64,40,38,6);}
+  else if(av.hat===2){c.fillStyle='#ffd23f';c.beginPath();c.moveTo(40,42);c.lineTo(40,20);c.lineTo(52,32);c.lineTo(64,16);
+    c.lineTo(76,32);c.lineTo(88,20);c.lineTo(88,42);c.closePath();c.fill();c.stroke();}
+  else if(av.hat===3){c.fillStyle='#9b5de5';c.beginPath();c.moveTo(44,42);c.lineTo(84,42);c.lineTo(64,6);c.closePath();c.fill();c.stroke();
+    c.fillStyle='#fff';c.beginPath();c.arc(64,6,5,0,7);c.fill();c.stroke();}
+  else if(av.hat===4){c.fillStyle='#222';c.fillRect(46,8,36,32);c.fillRect(36,38,56,7);}
+  c.drawImage(layer,0,0);
+}
+function saveAv(){try{localStorage.setItem('tr_av',JSON.stringify(av));localStorage.setItem('tr_layer',layer.toDataURL());}catch{}}
+const avMarks=[],avSync=()=>avMarks.forEach(f=>f());
+function avBtn(box,cls,fill,click,isOn){
+  const b=document.createElement('button');b.type='button';b.className=cls;fill(b);
+  b.onclick=()=>{click();avSync();};box.append(b);
+  avMarks.push(()=>b.classList.toggle('on',isOn()));
+}
+['#ffd400','#ff6b00','#c1272d','#ff9eb5','#7b2ff2','#00b5b8','#00a651','#8b5a2b','#ffffff','#aaaaaa'].forEach(c=>
+  avBtn($('o_body'),'sw',b=>b.style.background=c,()=>{av.body=c;paintAv();saveAv();},()=>av.body===c));
+[['o_eyes','eyes',['Rond','Groot','Blij','Zonnebril']],['o_mouth','mouth',['Lach','Open','Neutraal','Sip']],
+ ['o_hat','hat',['Geen','Pet','Kroon','Feesthoed','Hoge hoed']]].forEach(([id,key,labels])=>
+  labels.forEach((t,i)=>avBtn($(id),'tb',b=>b.textContent=t,()=>{av[key]=i;paintAv();saveAv();},()=>av[key]===i)));
+['#000000','#ffffff','#c1272d','#ff6b00','#ffd400','#00a651','#00b5b8','#2f6fe0','#7b2ff2','#d6329c','#8b5a2b','#666666'].forEach(c=>
+  avBtn($('o_pen'),'sw',b=>b.style.background=c,()=>{avPen.color=c;avPen.erase=false;},()=>!avPen.erase&&avPen.color===c));
+[2,4,8].forEach(s=>avBtn($('o_pen'),'sz',b=>b.innerHTML=`<i style="width:${s*2+2}px;height:${s*2+2}px"></i>`,()=>{avPen.size=s;},()=>avPen.size===s));
+avBtn($('o_pen'),'tb',b=>b.textContent='🧽 Gum',()=>{avPen.erase=!avPen.erase;},()=>avPen.erase);
+$('avclear').onclick=()=>{lctx.clearRect(0,0,AVS,AVS);paintAv();saveAv();};
+$('avrand').onclick=()=>{
+  const r=n=>Math.floor(Math.random()*n),cols=['#ffd400','#ff6b00','#c1272d','#ff9eb5','#7b2ff2','#00b5b8','#00a651','#8b5a2b'];
+  av={body:cols[r(cols.length)],eyes:r(4),mouth:r(4),hat:r(5)};paintAv();saveAv();avSync();
+};
+let avDown=false,avLast=null;
+const avPos=e=>{const r=avc.getBoundingClientRect();return [(e.clientX-r.left)*AVS/r.width,(e.clientY-r.top)*AVS/r.height];};
+function avStroke(a,b){
+  lctx.globalCompositeOperation=avPen.erase?'destination-out':'source-over';
+  lctx.strokeStyle=avPen.color;lctx.lineWidth=avPen.size;lctx.lineCap='round';
+  lctx.beginPath();lctx.moveTo(a[0],a[1]);lctx.lineTo(b[0]+.01,b[1]);lctx.stroke();paintAv();
+}
+avc.onpointerdown=e=>{e.preventDefault();avDown=true;avc.setPointerCapture(e.pointerId);avLast=avPos(e);avStroke(avLast,avLast);};
+avc.onpointermove=e=>{if(!avDown)return;const p=avPos(e);avStroke(avLast,p);avLast=p;};
+avc.onpointerup=avc.onpointercancel=()=>{if(avDown){avDown=false;saveAv();}};
+function avData(){const t=document.createElement('canvas');t.width=t.height=64;t.getContext('2d').drawImage(avc,0,0,64,64);return t.toDataURL('image/png');}
+paintAv();avSync();
+const savedLayer=localStorage.getItem('tr_layer');
+if(savedLayer){const im=new Image();im.onload=()=>{lctx.drawImage(im,0,0);paintAv();};im.src=savedLayer;}
+
+/* ---------- schermen en verbinding ---------- */
+function show(id){for(const s of document.querySelectorAll('.screen'))s.classList.toggle('on',s.id===id);}
+const send=o=>{if(ws&&ws.readyState===1)ws.send(JSON.stringify(o));};
+function connect(first){
+  if(ws){ws.onclose=null;ws.close();}
+  me=null;R=null;RES=null;
+  ws=new WebSocket((location.protocol==='https:'?'wss://':'ws://')+location.host);
+  ws.onopen=()=>send(first);
+  ws.onmessage=e=>handle(JSON.parse(e.data));
+  ws.onclose=()=>{show('home');if(!$('err').textContent)$('err').textContent='De verbinding is verbroken.';};
+}
+const nm=()=>{const n=$('name').value.trim();localStorage.setItem('tr_name',n);return n;};
+$('name').value=localStorage.getItem('tr_name')||'';
+$('create').onclick=()=>{$('err').textContent='';connect({t:'create',name:nm(),avatar:avData()});};
+$('test').onclick=()=>{$('err').textContent='';connect({t:'create',name:nm(),avatar:avData(),test:true});};
+$('join').onclick=()=>{
+  const c=$('code').value.trim();if(c.length!==4){$('err').textContent='Voer een code van 4 letters in.';return;}
+  $('err').textContent='';connect({t:'join',name:nm(),code:c,avatar:avData()});
+};
+
+function handle(m){
+  if(m.type==='joined')me=m.id;
+  else if(m.type==='room'){R=m;if(m.state!=='choosing')choices=null;if(m.state==='lobby')RES=null;render();}
+  else if(m.type==='time'){$('timer').textContent=m.t;$('etimer').textContent=m.t;}
+  else if(m.type==='choose'){choices=m.words;renderOverlay();}
+  else if(m.type==='op')applyOp(m.op);
+  else if(m.type==='ops')redraw(m.ops);
+  else if(m.type==='chat')addChat(m);
+  else if(m.type==='avatar')AVT[m.id]=m.avatar;
+  else if(m.type==='results'){RES=m;if(R&&R.state==='gameEnd')renderEnd();}
+  else if(m.type==='kicked'){$('err').textContent='U bent weggestemd door de andere spelers.';}
+  else if(m.type==='error'){$('err').textContent=m.text;}
+}
+
+/* ---------- lobby ---------- */
+function fill(id,vals,suffix=''){$(id).innerHTML=vals.map(v=>`<option value="${v}">${v}${suffix}</option>`).join('');}
+fill('s_rounds',[1,2,3,4,5,6,8,10]);fill('s_time',[30,45,60,80,100,120,150,180]);
+fill('s_choices',[1,2,3,4,5]);fill('s_hints',[0,1,2,3,4]);fill('s_max',[2,3,4,5,6,7,8,10,12]);
+for(const id of ['s_rounds','s_time','s_choices','s_hints','s_max','s_custom','s_only'])$(id).onchange=pushSettings;
+function pushSettings(){
+  send({t:'settings',s:{rounds:$('s_rounds').value,time:$('s_time').value,choices:$('s_choices').value,
+    hints:$('s_hints').value,max:$('s_max').value,custom:$('s_custom').value,onlyCustom:$('s_only').checked}});
+}
+$('start').onclick=()=>send({t:'start'});
+$('tolobby').onclick=()=>send({t:'lobby'});
+$('copy').onclick=()=>{navigator.clipboard&&navigator.clipboard.writeText(R.code);$('copy').textContent='Gekopieerd!';setTimeout(()=>$('copy').textContent='Kopieer',1500);};
+
+const hue=id=>`hsl(${(id*67)%360},60%,48%)`;
+function rows(el,lobby){
+  el.innerHTML='';
+  const list=lobby?[...R.players]:[...R.players].sort((a,b)=>b.score-a.score);
+  list.forEach((p,i)=>{
+    const li=document.createElement('li');li.className='pl'+(p.guessed?' g':'');
+    if(!lobby){const rk=document.createElement('div');rk.className='rk';rk.textContent='#'+(i+1);li.append(rk);}
+    let ic;
+    if(AVT[p.id]){ic=new Image();ic.src=AVT[p.id];ic.alt='';ic.className='av';}
+    else{ic=document.createElement('div');ic.className='av';ic.style.background=hue(p.id);ic.textContent=p.name[0].toUpperCase();}
+    const w=document.createElement('div');w.className='nmw';
+    const n=document.createElement('div');n.className='nm';n.textContent=p.name+(p.id===me?' (u)':'');
+    w.append(n);
+    if(!lobby){const pt=document.createElement('small');pt.textContent=p.score+' punten';w.append(pt);}
+    const tag=document.createElement('span');tag.className='tg';
+    tag.textContent=lobby?(p.id===R.hostId?'👑':''):(p.id===R.drawerId?'✏️':'')+(p.guessed?'✔':'');
+    li.append(ic,w,tag);
+    if(p.id!==me&&R.canKick){
+      const k=document.createElement('button');k.type='button';k.className='kb'+(p.iKick?' on':'');
+      k.textContent=`🚫 ${p.kicks}/${R.need}`;
+      k.title=p.iKick?'Klik om uw stem in te trekken':'Stem om deze speler weg te sturen';
+      k.onclick=()=>send({t:'kick',target:p.id});
+      li.append(k);
+    }
+    el.append(li);
+  });
+  document.querySelectorAll('.khint').forEach(h=>h.textContent=R.canKick?
+    '🚫 = votekick. Meer dan de helft van de overige spelers moet instemmen.':'Votekick is beschikbaar vanaf 3 spelers.');
+}
+function renderLobby(){
+  $('lcode').textContent=R.code;$('pc').textContent=`(${R.players.length}/${R.settings.max})`;
+  rows($('lplayers'),true);
+  const host=R.hostId===me,s=R.settings;
+  const set=(id,v)=>{const e=$(id);if(document.activeElement!==e){if(e.type==='checkbox')e.checked=v;else e.value=v;}e.disabled=!host;};
+  set('s_rounds',s.rounds);set('s_time',s.time);set('s_choices',s.choices);set('s_hints',s.hints);
+  set('s_max',s.max);set('s_custom',s.custom);set('s_only',s.onlyCustom);
+  $('start').style.display=host?'block':'none';$('start').disabled=R.players.length<2;
+  $('lmsg').textContent=(R.test?'🧪 Testmodus: Bot Bram en Bot Lotte doen mee. ':'')+(host?(R.players.length<2?'Wacht op minstens één andere speler. Deel de kamercode.':'U kunt het spel starten.'):'Wacht tot de host het spel start.');
+}
+
+/* ---------- spel ---------- */
+function render(){
+  if(!R)return;
+  if(R.state==='lobby'){show('lobby');renderLobby();return;}
+  if(R.state==='gameEnd'){show('end');renderEnd();return;}
+  show('game');rows($('gplayers'),false);
+  const dr=R.players.find(p=>p.id===R.drawerId),imDrawer=R.drawerId===me;
+  $('rinfo').textContent=`Ronde ${R.round} van ${R.settings.rounds}`+(R.test?' 🧪':'');
+  $('timer').textContent=R.time>0?R.time:'';
+  let w='';
+  if(R.state==='drawing')w=imDrawer?'Teken: '+R.word:R.mask.split('').join(' ')+`  (${R.len})`;
+  else if(R.state==='turnEnd')w=R.word;
+  else if(R.state==='choosing')w=dr?dr.name+' kiest…':'';
+  $('word').textContent=w;
+  $('tools').style.display=(R.state==='drawing'&&imDrawer)?'flex':'none';
+  const te=R.state==='turnEnd';
+  $('votebar').style.display=((R.state==='drawing'&&!imDrawer)||te)?'block':'none';
+  $('up').disabled=$('down').disabled=imDrawer;
+  $('up').textContent='👍'+(te?' '+R.likes:'');$('down').textContent='👎'+(te?' '+R.dislikes:'');
+  $('up').classList.toggle('on',R.myVote===1);$('down').classList.toggle('on',R.myVote===-1);
+  renderOverlay();
+}
+$('up').onclick=()=>send({t:'vote',v:R.myVote===1?0:1});
+$('down').onclick=()=>send({t:'vote',v:R.myVote===-1?0:-1});
+
+function renderOverlay(){
+  const o=$('overlay');o.classList.remove('strip');
+  if(!R||R.state==='lobby'||R.state==='drawing'||R.state==='gameEnd'){o.style.display='none';return;}
+  o.style.display='flex';o.innerHTML='';
+  const add=(tag,txt,cls)=>{const e=document.createElement(tag);e.textContent=txt;if(cls)e.className=cls;o.append(e);return e;};
+  const dr=R.players.find(p=>p.id===R.drawerId);
+  if(R.state==='choosing'){
+    if(R.drawerId===me&&choices){
+      add('h2','Kies een woord om te tekenen');
+      choices.forEach((w,i)=>{const b=add('button',w,'btn go');b.onclick=()=>{send({t:'choose',i});choices=null;o.style.display='none';};});
+    } else add('h2',(dr?dr.name:'Iemand')+' kiest een woord…');
+  } else if(R.state==='turnEnd'){
+    o.classList.add('strip'); // de tekening blijft zichtbaar om te beoordelen
+    add('h2','Het woord was: '+R.word);
+    add('div',R.gains.map(g=>`${g.name} ${g.gain>0?'+':''}${g.gain}`).join(' · '));
+  }
+}
+
+/* ---------- eindscherm ---------- */
+function renderEnd(){
+  const ul=$('eranking');ul.innerHTML='';
+  [...R.players].sort((a,b)=>b.score-a.score).forEach((p,i)=>{
+    const li=document.createElement('li');li.textContent=`${['🥇','🥈','🥉'][i]||(i+1)+'.'} ${p.name}: ${p.score}`;ul.append(li);});
+  const g=$('egallery');g.innerHTML='';
+  if(RES&&RES.best){
+    [['🏆 Beste tekening',RES.best],['🥴 Slechtste tekening',RES.worst]].forEach(([title,e])=>{
+      if(!e)return;
+      const f=document.createElement('div'),h=document.createElement('h3');h.textContent=title;
+      const c=document.createElement('canvas');c.width=800;c.height=600;
+      const x=c.getContext('2d');x.fillStyle='#fff';x.fillRect(0,0,800,600);e.ops.forEach(o=>applyOp(o,x));
+      const cap=document.createElement('div');cap.textContent=`"${e.word}" door ${e.drawer} · 👍 ${e.likes} · 👎 ${e.dislikes}`;
+      f.append(h,c,cap);g.append(f);
+    });
+    $('eline').textContent='';
+  } else $('eline').textContent='Er is niet gestemd op de tekeningen.';
+  $('etimer').textContent=R.time;
+  $('tolobby').style.display=R.hostId===me?'inline-block':'none';
+}
+
+function addChat(m){
+  const d=document.createElement('div');
+  if(m.cls)d.className=m.cls;
+  if(m.kind==='msg'){const b=document.createElement('b');b.textContent=m.name+': ';d.append(b,document.createTextNode(m.text));}
+  else d.textContent=m.text;
+  const l=$('log');l.append(d);l.scrollTop=l.scrollHeight;
+  while(l.children.length>150)l.firstChild.remove();
+}
+$('msg').onkeydown=e=>{if(e.key==='Enter'&&e.target.value.trim()){send({t:'chat',text:e.target.value});e.target.value='';}};
+
+/* ---------- tekenen ---------- */
+function applyOp(o,c=ctx){
+  if(o.t==='c'){c.fillStyle='#fff';c.fillRect(0,0,800,600);}
+  else if(o.t==='l'){c.strokeStyle=o.col;c.lineWidth=o.w;c.lineCap=c.lineJoin='round';
+    c.beginPath();c.moveTo(o.x0,o.y0);c.lineTo(o.x1,o.y1);c.stroke();}
+  else if(o.t==='f')flood(o.x,o.y,o.col,c);
+}
+function redraw(ops){ctx.fillStyle='#fff';ctx.fillRect(0,0,800,600);ops.forEach(o=>applyOp(o));}
+
+/* Vullen: eerst het vlak zelf, daarna twee pixels onder de zachte rand van de lijn door,
+   zodat er geen wit randje overblijft. Echte lijnen blijven behouden. */
+function flood(sx,sy,hex,c=ctx){
+  const W=800,H=600;
+  const img=c.getImageData(0,0,W,H),d=img.data,vis=new Uint8Array(W*H);
+  const fr=parseInt(hex.slice(1,3),16),fg=parseInt(hex.slice(3,5),16),fb=parseInt(hex.slice(5,7),16);
+  const i0=(sy*W+sx)*4,tr=d[i0],tg=d[i0+1],tb=d[i0+2];
+  if(tr===fr&&tg===fg&&tb===fb)return;
+  const ok=(x,y)=>{const p=y*W+x;if(vis[p])return false;const i=p*4;
+    return Math.abs(d[i]-tr)+Math.abs(d[i+1]-tg)+Math.abs(d[i+2]-tb)<60;};
+  const st=[sx,sy];
+  while(st.length){
+    const y=st.pop(),x=st.pop();if(!ok(x,y))continue;
+    let l=x,r=x;while(l>0&&ok(l-1,y))l--;while(r<W-1&&ok(r+1,y))r++;
+    for(let k=l;k<=r;k++){const p=y*W+k;vis[p]=1;d[p*4]=fr;d[p*4+1]=fg;d[p*4+2]=fb;d[p*4+3]=255;}
+    for(const yy of [y-1,y+1]){if(yy<0||yy>H-1)continue;let inside=false;
+      for(let k=l;k<=r;k++){const m=ok(k,yy);if(m&&!inside){st.push(k,yy);inside=true;}else if(!m)inside=false;}}
+  }
+  const dif=(a,b)=>Math.abs(d[a]-d[b])+Math.abs(d[a+1]-d[b+1])+Math.abs(d[a+2]-d[b+2]);
+  const DIRS=[[1,0],[-1,0],[0,1],[0,-1]];
+  for(let pass=0;pass<2;pass++){
+    const add=[];
+    for(let y=0;y<H;y++)for(let x=0;x<W;x++){
+      if(!vis[y*W+x])continue;
+      for(const [dx,dy] of DIRS){
+        const nx=x+dx,ny=y+dy;if(nx<0||ny<0||nx>=W||ny>=H)continue;
+        const q=ny*W+nx;if(vis[q])continue;
+        const ax=nx+dx,ay=ny+dy;
+        // een randpixel verschilt van de pixel erachter; het midden van een lijn niet
+        if(ax<0||ay<0||ax>=W||ay>=H||dif(q*4,(ay*W+ax)*4)>40)add.push(q);
+      }
+    }
+    for(const q of add){vis[q]=1;d[q*4]=fr;d[q*4+1]=fg;d[q*4+2]=fb;d[q*4+3]=255;}
+  }
+  c.putImageData(img,0,0);
+}
+const canDraw=()=>R&&R.state==='drawing'&&R.drawerId===me;
+const emit=o=>{applyOp(o);send({t:'draw',op:o});};
+const pos=e=>{const r=cv.getBoundingClientRect();return [(e.clientX-r.left)*800/r.width,(e.clientY-r.top)*600/r.height];};
+const rd=v=>Math.round(v*10)/10;
+function seg(a,b,c,d){emit({t:'l',x0:rd(a),y0:rd(b),x1:rd(c),y1:rd(d),col:tool==='eraser'?'#ffffff':color,w:size,s:sid});}
+cv.onpointerdown=e=>{
+  if(!canDraw())return;e.preventDefault();cv.setPointerCapture(e.pointerId);
+  const [x,y]=pos(e);sid=Date.now()*1000+(cnt++%1000);
+  if(tool==='fill'){emit({t:'f',x:Math.max(0,Math.min(799,Math.round(x))),y:Math.max(0,Math.min(599,Math.round(y))),col:color,s:sid});return;}
+  drawing=true;seg(x,y,x+.1,y+.1);last=[x+.1,y+.1];
+};
+cv.onpointermove=e=>{if(!drawing||!canDraw())return;const [x,y]=pos(e);seg(last[0],last[1],x,y);last=[x,y];};
+cv.onpointerup=cv.onpointercancel=()=>{drawing=false;};
+
+/* gereedschap */
+const tools=$('tools');
+const cur=document.createElement('div');cur.id='cur';cur.style.background=color;
+const palBox=document.createElement('div');palBox.className='pal';
+const szBox=document.createElement('div');szBox.className='szs';
+const tbBox=document.createElement('div');tbBox.className='tbs';
+tools.append(cur,palBox,szBox,tbBox);
+const PAL=['#000000','#666666','#aaaaaa','#ffffff','#c1272d','#ff6b00','#ffd400','#7ac943','#00a651','#00b5b8','#2f6fe0','#1b2a8f','#7b2ff2','#d6329c','#ff9eb5','#8b5a2b','#5c3317','#f5d0a9','#003d2e','#ff0000'];
+PAL.forEach(c=>{const b=document.createElement('button');b.className='sw'+(c===color?' on':'');b.style.background=c;
+  b.onclick=()=>{color=c;cur.style.background=c;if(tool==='eraser')setTool('pen');for(const x of tools.querySelectorAll('.sw'))x.classList.toggle('on',x===b);};palBox.append(b);});
+[4,10,20,36].forEach(s=>{const b=document.createElement('button');b.className='sz'+(s===size?' on':'');
+  b.innerHTML=`<i style="width:${Math.max(4,s/1.6)}px;height:${Math.max(4,s/1.6)}px"></i>`;
+  b.onclick=()=>{size=s;for(const x of tools.querySelectorAll('.sz'))x.classList.toggle('on',x===b);};szBox.append(b);});
+const tb={};
+function setTool(t){tool=t;for(const k in tb)tb[k].classList.toggle('on',k===t);}
+[['pen','✏️ Potlood'],['eraser','🧽 Gum'],['fill','🪣 Vullen']].forEach(([k,l])=>{
+  const b=document.createElement('button');b.className='tb'+(k==='pen'?' on':'');b.textContent=l;b.onclick=()=>setTool(k);tb[k]=b;tbBox.append(b);});
+const act=(l,f)=>{const b=document.createElement('button');b.className='tb';b.textContent=l;b.onclick=f;tbBox.append(b);};
+act('↶ Ongedaan',()=>send({t:'undo'}));
+act('🗑 Wissen',()=>{if(canDraw()){sid=Date.now()*1000;emit({t:'c'});}});
+</script></body></html>
